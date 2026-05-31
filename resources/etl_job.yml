@@ -1,0 +1,24 @@
+resources:
+  jobs:
+    ETL_Sales:
+      name: ETL_Sales
+
+      tasks:
+        - task_key: Extract
+          notebook_task:
+            notebook_path: notebooks/extract
+
+        - task_key: Transform
+          depends_on:
+            - task_key: Extract
+          notebook_task:
+            notebook_path: notebooks/transform
+
+        - task_key: Load
+          depends_on:
+            - task_key: Transform
+          notebook_task:
+            notebook_path: notebooks/load
+
+      queue:
+        enabled: true
